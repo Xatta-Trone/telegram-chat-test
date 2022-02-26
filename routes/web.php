@@ -38,4 +38,4 @@ Route::get('/sendmsg', [HomeController::class, 'sendmsg'])->name('sendmsg');
 Route::match(['get', 'post'], '/botman', [HomeController::class, 'handle']);
 
 // get the chat id and update in db
-Route::get('5100943662:AAG362wrOfZJjoXvOcvkyrxJ9-t2QTz-Wes/webhook', [HomeController::class, 'configtelegram']);
+Route::get('5204432312:AAHZj8KOiq1Yn15CKMUMRafgX6mVM3HBwg0/webhook', [HomeController::class, 'configtelegram']);
