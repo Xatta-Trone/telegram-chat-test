@@ -109,7 +109,7 @@ class HomeController extends Controller
     }
 
 
-    public function configtelegram()
+    public function configtelegram(Request $request)
     {
         $updates = Telegram::commandsHandler(true);
         $chat_id = $updates->getChat()->getId();
