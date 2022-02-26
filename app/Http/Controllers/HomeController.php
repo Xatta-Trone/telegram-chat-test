@@ -142,7 +142,7 @@ class HomeController extends Controller
         if ($update) {
             Telegram::sendMessage([
                 'chat_id' => $chat_id,
-                'text' => "$user->name::$user_id:: Account successfully connected.",
+                'text' => "$user->name::$user_id:: Account successfully connected. Now refresh the webpage.",
             ]);
         }
     }
