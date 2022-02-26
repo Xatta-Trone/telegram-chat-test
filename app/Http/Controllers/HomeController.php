@@ -78,6 +78,15 @@ class HomeController extends Controller
         return redirect('login');
     }
 
+    public function delete()
+    {
+
+
+        Auth::user()->delete();
+
+        return redirect('register');
+    }
+
 
     /**
      * Place your BotMan logic here.
