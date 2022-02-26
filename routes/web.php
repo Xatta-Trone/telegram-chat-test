@@ -31,6 +31,8 @@ Route::get('/profile', function () {
 
 Route::post('/register', [HomeController::class, 'register'])->name('register');
 Route::post('/login', [HomeController::class, 'login'])->name('login');
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+Route::get('/delete', [HomeController::class, 'delete'])->name('delete');
 Route::get('/tbot', [HomeController::class, 'tbot'])->name('tbot');
 Route::get('/sendmsg', [HomeController::class, 'sendmsg'])->name('sendmsg');
 

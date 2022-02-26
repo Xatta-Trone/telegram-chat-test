@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use BotMan\BotMan\BotManFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\Drivers\Telegram\TelegramDriver;
@@ -68,6 +69,16 @@ class HomeController extends Controller
     }
 
 
+    public function logout()
+    {
+        Session::flush();
+
+        Auth::logout();
+
+        return redirect('login');
+    }
+
+
     /**
      * Place your BotMan logic here.
      */
@@ -102,10 +113,12 @@ class HomeController extends Controller
 
     public function sendmsg()
     {
+        $msg = request()->get('msg');
         Telegram::sendMessage([
             'chat_id' => auth()->user()->t_chat_id,
-            'text' => 'Account successfully connected.',
+            'text' => $msg ? $msg : "No message found! So, I sent it myself. Aren't I an awesome bot !!!",
         ]);
+        return redirect()->route('profile');
     }
 
 
@@ -114,11 +127,13 @@ class HomeController extends Controller
         $updates = Telegram::commandsHandler(true);
         $chat_id = $updates->getChat()->getId();
         $user_id = array_key_exists('from', $updates['message']) ?  $updates['message']['from']['id'] : null;
-        $update = User::where('t_user_id', $user_id)->get()->first()->update(['t_chat_id' => $chat_id]);
+        $user = User::where('t_user_id', $user_id)->get()->first();
+
+        $update = $user->update(['t_chat_id' => $chat_id]);
         if ($update) {
             Telegram::sendMessage([
                 'chat_id' => $chat_id,
-                'text' => "$user_id: Account successfully connected.",
+                'text' => "$user->name::$user_id:: Account successfully connected.",
             ]);
         }
     }
